@@ -225,10 +225,10 @@ img {
   row-gap: 0;
 }
 
-.home__title{
-  color: var(--white-color);
-  font-size: var(--biggest-font-size);
-  font-weight: var(--font-semi-bold);
+.home__title {
+  color: var(--white-color, #ffffff); /* fallback to white */
+  font-size: var(--biggest-font-size, 100px); /* fallback to 48px */
+  font-weight: var(--font-semi-bold, 900); /* fallback to 600 */
   text-align: center;
 }
 
@@ -344,86 +344,102 @@ img {
   background-color: var(--dark-color);
 }
 /*=============== POPULAR ===============*/
-.popular{
+.popular {
   background-color: var(--body-white-color);
 }
 
-.popular.section__title{
+.popular.section__title {
   color: var(--title-color);
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.popular__swpier{
+/* Fix typo here */
+.popular__swiper {
   padding-top: 1.5rem;
 }
 
-.popular__card{
+.popular__card {
   width: 270px;
   display: grid;
   row-gap: 1.5rem;
+  position: relative; /* added for positioning */
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.popular__images{
-  position: relative;
+.popular__card:hover {
+  transform: translateY(-10px);
+}
+
+.popular__images {
+  position: relative; /* important for absolute children */
   display: grid;
   justify-items: center;
   justify-self: center;
 }
 
-.popular__shape{
+/* Semicircle shape with clip-path */
+.popular__shape {
   width: 195px;
   height: 195px;
   background-color: var(--first-color);
-  border-radius: 50%;
+  border-radius: 60%;
   clip-path: inset(50% 0 0 0);
 }
 
-.popular__images img{
+.popular__images img {
   position: absolute;
 }
 
-.popular__coffee{
+.popular__coffee {
   width: 130px;
   top: -1.5rem;
   right: 3rem;
+  z-index: 2;
 }
 
-.popular__bean-1{
+.popular__bean-1 {
   width: 30px;
   top: 3rem;
-  left: .5rem;
-  transition:  tranform 5s .1s;
+  left: 0.5rem;
+  transition: transform 0.5s 0.1s;
+  z-index: 3;
 }
 
-.popular__bean-2{
+.popular__bean-2 {
   width: 20px;
   right: 2rem;
   bottom: 2rem;
   rotate: 75deg;
   filter: blur(1px);
-  transition:  tranfom .5s .1s;
+  transition: transform 0.5s 0.1s;
+  z-index: 3;
 }
 
-.popular__data{
+.popular__data {
   text-align: center;
 }
 
-.popular__name{
+.popular__name {
   font-size: var(--h1-font-size);
   color: var(--title-color);
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
-.popular__description{
+.popular__description {
   margin-bottom: 1.5rem;
+  color: var(--text-color);
+  font-size: 0.95rem;
 }
 
-.popular__card :hover .popular__bean-1{
-  transform: translateY(-.5px -.25px); 
+/* Correct transform syntax here */
+.popular__card:hover .popular__bean-1 {
+  transform: translate(-0.5rem, -0.25rem);
 }
 
-.popular__card :hover.popular__bean-2{
-  transform: transform (.5rem -.25rem);
+.popular__card:hover .popular__bean-2 {
+  transform: translate(0.5rem, -0.25rem);
 }
 /* Swiper class */
 .swiper{
@@ -432,58 +448,62 @@ img {
 }
 
 /*=============== ABOUT ===============*/
-.about__container{
+.about__container {
   row-gap: 3rem;
 }
 
-.about__data{
+.about__data {
   text-align: center;
 }
 
+/* Scoped styles */
 .about .section__title,
-.about__description{
+.about .about__description {
   color: var(--white-color);
   margin-bottom: 1.5rem;
 }
 
-.about__images{
+.about__images {
   position: relative;
   display: grid;
   place-items: center;
   justify-self: center;
 }
 
-.about__shape{
+.about__shape {
   width: 300px;
   height: 300px;
   background-color: var(--first-color);
   border-radius: 50%;
 }
 
-.about__images img{
+.about__images img {
   position: absolute;
 }
 
-.about__coffee{
+.about__coffee {
   width: 280px;
-  filter: drop-shadow(0 8px 16px hsla(166,85%,8%, .5));
+  filter: drop-shadow(0 8px 16px hsla(166, 85%, 8%, 0.5));
+  z-index: 2; /* ensure coffee is on top */
 }
 
 .about__leaf-1,
-.about__leaf-2{
+.about__leaf-2 {
   width: 50%;
+  position: absolute;
+  z-index: 1;
 }
 
-.about__leaf-1{
-  top: .5rem;
+.about__leaf-1 {
+  top: 0.5rem;
   left: 3.5rem;
-  rotate: -105deg;
+  transform: rotate(-105deg);
 }
 
-.about__leaf-2{
+.about__leaf-2 {
   top: 7.75rem;
   right: 2.5rem;
-  rotate: -15deg;
+  transform: rotate(-15deg);
 }
 
 /*=============== PRODUCTS ===============*/
@@ -503,6 +523,9 @@ img {
   position: relative;
   background-color: var(--dark-color);
   padding: 1rem .5rem 1.25rem;
+  overflow: visible;
+  position: relative;
+  padding: 2rem 1.5rem 3rem;
 }
 
 .products__images{
@@ -656,74 +679,115 @@ img {
   border-radius: 50%;
 }
 
-.contact__delivery{
-  width: 230px;
+.contact__delivery {
+  width: 330px;
   position: absolute;
   top: -2.5rem;
-  mask-image: linear-gradient(to bottom
-              var(--first-color) 80%,
-              transparent 100%);
+  mask-image: linear-gradient(to bottom, var(--first-color) 80%, transparent 100%);
+  /* For better browser support you may want to add webkit prefix */
+  -webkit-mask-image: linear-gradient(to bottom, var(--first-color) 80%, transparent 100%);
 }
 /*=============== FOOTER ===============*/
-.footer{
+/* Footer Section */
+.footer {
   background-color: var(--body-first-color);
-  padding-block: 4rem 2rem;
+  padding: 4rem 0;
 }
 
-.footer__container{
+/* Footer Container */
+.footer__container {
+  display: grid;
   row-gap: 3rem;
+  grid-template-columns: repeat(3 , 1fr); /* Responsive layout */
+  max-width: 1200px;
+  padding: 0 2rem;
+  margin: 0 auto;
 }
 
-.footer__title{
+/* Footer Titles */
+.footer__title {
   font-size: var(--h2-font-size);
   color: var(--dark-color);
   margin-bottom: 1rem;
 }
 
+/* Social links, payment icons, and form container */
 .footer__social,
 .footer__pay,
-.footer__form{
+.footer__form {
   display: flex;
   column-gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap; /* Ensures responsiveness */
 }
 
-.footer__social-link{
+/* Social Links */
+.footer__social-link {
   font-size: 1.5rem;
   color: var(--dark-color);
-  transition: transform .4s;
+  transition: transform 0.4s, color 0.4s;
 }
 
-.footer__social-link:hover{
-  transform: translateY(-.25rem);
+.footer__social-link:hover {
+  transform: translateY(-0.25rem);
+  color: var(--primary-color);
 }
 
-.footer__pay-card{
+/* Payment Cards */
+.footer__pay-card {
   width: 30px;
+  object-fit: contain;
 }
 
-.footer__form{
+/* Footer Form */
+.footer__form {
   background-color: var(--dark-color);
-  padding: .5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
-.footer__input{
-  width: 100%;
+/* Input Field */
+.footer__input {
+  flex: 1;
   background: transparent;
-  padding-left: .75rem;
+  padding-left: 0.75rem;
   color: var(--white-color);
   font-weight: var(--font-semi-bold);
+  border: none;
+  outline: none;
 }
 
-.footer__input::placeholder{
+.footer__input::placeholder {
   color: var(--white-color);
+  opacity: 0.8;
 }
 
-.footer__button{
-  padding: .75rem 1.5rem;
-  background-color: var(--dark-color);
+/* Submit Button */
+.footer__button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
   cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 0.5rem;
 }
 
+.footer__button:hover {
+  background-color: var(--dark-color);
+}
+
+/* Footer Copyright */
+.footer__copy {
+  display: block;
+  margin-top: 4rem;
+  color: var(--dark-color);
+  text-align: center;
+  font-size: var(--small-font-size);
+}
 /*=============== SCROLL BAR ===============*/
 ::-webkit-scrollbar{
   width: .6rem;
@@ -764,206 +828,212 @@ img {
 
 /*=============== BREAKPOINTS ===============*/
 /* For small devices */
-@media  screen and (min-width:330px) {
-  .container{
+/* Small devices */
+@media screen and (min-width: 330px) {
+  .container {
     margin-inline: 1rem;
   }
 
-  .section__title{
-    font-size: 5rem;
+  .section__title {
+    font-size: 3rem;
   }
 
-  .home__title{
-    font-size: 5.5rem;
+  .home__title {
+    font-size: 6.5rem;
   }
 
-  .home__shape{
+  .home__shape {
     width: 250px;
     height: 250px;
   }
 
-  .home__coffee{
+  .home__coffee {
     width: 145px;
   }
 
-  .home__splash{
+  .home__splash {
     width: 310px;
   }
 
-  .home__sticker{
+  .home__sticker {
     top: 25rem;
   }
 
-  .about__shape{
+  .about__shape {
     width: 250px;
     height: 250px;
   }
 
-  .about__coffee{
+  .about__coffee {
     width: 250px;
   }
 
-  .products__container{
+  .products__container {
     grid-template-columns: 160px;
     justify-content: center;
   }
 
-  .contact__shape{
+  .contact__shape {
     width: 250px;
     height: 250px;
   }
 
-  .contact__delicery{
+  .contact__delivery {
     width: 190px;
   }
 }
 
-/* For medium devices */
-@media  screen and (min-width:576px) {
+/* Medium devices */
+@media screen and (min-width: 576px) {
   .home__container,
-  .about__container{
-    grid-template-columns: 400px;
+  .about__container {
+    grid-template-columns: 300px;
     justify-content: center;
   }
 
-  .products__container{
-    grid-template-columns: repeat(2, 160px);
+  .products__container {
+    grid-template-columns: repeat(2, 260px);
     justify-content: center;
   }
 
-  .footer__form{
-    width: 360px;
+  .footer__form {
+    width: 260px;
   }
 }
 
-@media  screen and (min-width:768px) {
-  .popular__swpier{
+/* Large devices */
+@media screen and (min-width: 768px) {
+  .popular__swiper {
     width: 850px;
     overflow-x: clip;
     justify-self: center;
   }
 
-  .products__container{
+  .products__container {
     grid-template-columns: repeat(3, 160px);
   }
 
-  .contact__container{
+  .contact__container {
     justify-content: center;
-  }
-  .contact__info{
-    grid-template-columns: repeat(2,1fr);
-    justify-content: center;
-    column-gap: 6rem;
   }
 
-  .footer__container{
+  .contact__info {
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    column-gap: 2rem;
+  }
+
+  .footer__container {
     grid-template-columns: repeat(2, 1fr);
     justify-items: center;
   }
 
-  .footer div:nth-child(3){
+  .footer div:nth-child(3) {
     grid-column: 1/3;
   }
 
-  .footer__title{
+  .footer__title {
     text-align: center;
   }
 }
 
-/* For large devices */
-@media screen and (min-width:1150px){
-  .container{
+/* Extra large devices */
+@media screen and (min-width: 1150px) {
+  .container {
     margin-inline: auto;
   }
-  
-  .section{
+
+  .section {
     padding-block: 7rem 5rem;
   }
 
-  .section__title{
+  .section__title {
     margin-bottom: 4rem;
   }
 
-  .nav{
-    height: calc(ver(--header-height)+2rem);
+  .nav {
+    height: calc(var(--header-height) + 2rem);
   }
 
   .nav__toggle,
-  .nav__close{
+  .nav__close {
     display: none;
   }
 
-  .nav__list{
+  .nav__list {
     flex-direction: row;
     column-gap: 4rem;
   }
 
-  .nav__link{
+  .nav__link {
     font-size: var(--normal-font-size);
   }
 
-  .home__container{
+  .home__container {
     grid-template-columns: 960px;
     max-width: 960px;
-    padding-top: 4.5rem;
+    /* padding-top: 4.5rem; */
+    margin-top: -1.9rem;
   }
 
-  .home__images{
-    transform: translate(1rem ,-2rem);
+  .home__title{
+    margin-left: 9rem;
+  }
+  .home__images {
+    transform: translate(1rem, -2rem);
     left: 20rem;
   }
 
-  .home__shape{
+  .home__shape {
     width: 490px;
     height: 490px;
   }
 
-  .home__coffee{
+  .home__coffee {
     width: 280px;
     top: -6rem;
   }
 
-  .home__splash{
+  .home__splash {
     width: 615px;
     left: -5rem;
-    bottom: .75rem;
+    bottom: 0.75rem;
   }
 
   .home__bean-1,
-  .home__bean-2{
+  .home__bean-2 {
     width: 70px;
-
   }
 
-  .home__bean-1{
+  .home__bean-1 {
     left: 3rem;
     top: 3.5rem;
   }
 
-  .home__bean-2{
+  .home__bean-2 {
     bottom: 10.75rem;
     right: 6.5rem;
   }
 
-  .home__ice-1{
+  .home__ice-1 {
     width: 90px;
     left: 2.5rem;
     bottom: 5rem;
   }
 
-  .home__ice-2{
+  .home__ice-2 {
     width: 70px;
     top: 6.5rem;
     right: 2rem;
   }
 
-  .home__leaf{
+  .home__leaf {
     width: 90px;
     right: 10rem;
     bottom: -2.5rem;
   }
 
-  .home__data{
+  .home__data {
     position: absolute;
     top: 20rem;
     left: 15rem;
@@ -972,206 +1042,217 @@ img {
     margin-top: 0;
   }
 
-  .home__description{
+  .home__description {
     margin-bottom: 6rem;
   }
 
-  .home__sticker{
+  .home__sticker {
     width: 160px;
-    top: 23rem;
-    right: -20rem ;
+    top: 22rem;
+    right: -21rem;
   }
 
-  .popular__container{
-    padding-bottom: 10rem;
+  .popular__container {
+    padding-bottom: 20rem;
   }
 
-  .popular__swpier{
+  .popular__swiper {
     width: 300px;
   }
 
-  .popular__card{
+  .popular__card {
     width: 390px;
+    padding-top: 2rem;
   }
 
-  .popular__shape{
-    width: 270px;
+  .popular__shape {
+    width : 270px;
     height: 270px;
   }
 
-  .popular__coffee{
+  .popular__coffee {
     width: 185px;
     top: -2rem;
   }
 
-  .popular__bean-1{
+  .popular__bean-1 {
     width: 40px;
     top: 4rem;
-    left: .75rem;
+    left: 0.75rem;
   }
 
-  .popular__bean-2{
+  .popular__bean-2 {
     width: 30px;
     right: 2.5rem;
     bottom: 2.5rem;
   }
 
-  .about__container{
+  .about__container {
     grid-template-columns: 300px 500px;
     align-items: center;
     column-gap: 6rem;
     padding-block: 2rem;
+    margin-top: 1rem;
   }
 
   .about__data,
-  .about__scetion__title{
+  .about__section__title {
     text-align: initial;
   }
-  .about__description{
-    margin-bottom: 4rem;
+
+  .about__description {
+    margin-bottom: 3rem;
   }
 
-  .about__shape{
+  .about__shape {
     width: 500px;
     height: 500px;
   }
 
-  .about__coffee{
+  .about__coffee {
     width: 480px;
   }
 
   .about__leaf-1,
-  .about__leaf-2{
+  .about__leaf-2 {
     width: 85px;
   }
 
-  .about__leaf-1{
-    top: .75rem;
+  .about__leaf-1 {
+    top: 0.75rem;
     left: 6rem;
   }
 
-  .about__leaf-2{
+  .about__leaf-2 {
     top: 13rem;
     right: 3.5rem;
   }
 
-  .products.container{
-    grid-template-columns: repeat(3,250px);
+  .products__container {
+    grid-template-columns: repeat(3, 250px);
     gap: 5rem;
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
+
   }
 
-  .products__card{
+  .products__card {
     padding: 1.5rem 1rem 1rem;
   }
 
-  .products__shape{
+  .products__shape {
     width: 200px;
     height: 200px;
   }
 
-  .products__coffee{
+  .products__coffee {
     width: 130px;
   }
 
-  .products__ice-1{
+  .products__ice-1 {
     width: 50px;
-    left: .75rem;
+    left: 0.75rem;
   }
 
-  .products__ice-2{
+  .products__ice-2 {
     width: 30px;
     top: 5.5rem;
     right: 1.5rem;
   }
 
-  .products__data{
-    margin-top: 1.5rem;
+  .products__data {
+    margin-top: 1rem;
   }
 
   .products__name,
-  .products__price{
+  .products__price {
     font-size: var(--h2-font-size);
   }
 
-  .products__button{
+  .products__button {
     right: 1rem;
     bottom: 2rem;
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
   }
 
-  .contact.section__title{
+  .contact__section__title {
     font-size: var(--biggest-font-size);
   }
 
-  .contact__container{
-    grid-template-columns: repeat(3 max-content);
+  .contact__container {
+    grid-template-columns: repeat(3, max-content);
     align-items: flex-start;
-    column-gap: 3rem;
+    column-gap: 1rem;
   }
 
-  .contact__info{
+  .contact__info {
     grid-template-columns: max-content;
-    row-gap: 6rem;
-    margin-top: 7rem;
+    row-gap: 5rem;
+    margin-top: 6rem;
   }
 
-  .contact__info:nth-child(2){
+  .contact__info:nth-child(2) {
     order: 1;
   }
 
-  .contact__title{
+  .contact__title {
     font-size: var(--h2-font-size);
     margin-bottom: 0;
   }
 
-  .contact__social{
+  .contact__social {
     column-gap: 1.5rem;
   }
 
-  .contact__images{
+  .contact__images {
     margin-top: 0;
   }
 
-  .contact__shape{
+  .contact__shape {
     width: 400px;
     height: 400px;
   }
 
-  .contact__delivery{
-    width: 380px;
-    top: -1.5rem;
+  .contact__delivery {
+    width: 280px;
+    top: -2.5rem;
+    justify-self: center;
+    padding-top: 2rem;
   }
 
-  .footer__container{
-    grid-template-columns: repeat(2,1);
+  .footer__container {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    height: 70px;
+    display: flex;
+    gap:250px;
   }
 
-  .footer__container div:nth-child(3){
-    grid-column: initial;
+  .footer__container div:nth-child(3) {
+    grid-column: auto;
   }
 
-  .footer__container div:nth-child(2){
+  .footer__container div:nth-child(2) {
     order: 1;
     justify-self: end;
   }
 
-  .footer__container div:nth-child(1){
+  .footer__container div:nth-child(1) {
     justify-self: start;
   }
 
   .footer__social,
-  .footer__pay{
+  .footer__pay {
     margin-inline: auto;
-    justify-content: center;
+    justify-self: center;
   }
 
-  .footer__copy{
-    margin-top: 5rem;
+  .footer__copy {
+    margin-top: 4rem;
+    padding-top: 2rem;
   }
 
-  .scrollup{
+  .scrollup {
     right: 3rem;
   }
 }
