@@ -94,14 +94,37 @@ const sr = ScrollReveal({
     delay: 300,   // fixed typo (was deplay)
     reset: true
 });
-sr.reveal('.popluar__swiper')
-sr.reveal('.about__data',{origin:'left'})
-sr.reveal('.about__images',{origin:'right'})
-sr.reveal('.about__coffee',{delay:1000})
-sr.reveal('.about__leaf-1 , .about__leaf-2',{delay:1400 , rotate:{z: 90}})
-sr.reveal('.products__card, .contact__info',{interval:100})
-sr.reveal('.contact__shape',{delay:600, scale:0})
-sr.reveal('.contact__delivery',{delay : 1200})
+sr.reveal('.popluar__swiper, .footer__container, .footer__copy')
+
+sr.reveal('.about__data', {
+  origin: 'left'
+});
+
+sr.reveal('.about__images', {
+  origin: 'right'
+});
+
+sr.reveal('.about__coffee', {
+  delay: 1000
+});
+
+sr.reveal('.about__leaf-1, .about__leaf-2', {
+  delay: 1400,
+  rotate: { z: 90 }
+});
+
+sr.reveal('.products__card, .contact__info', {
+  interval: 100
+});
+
+sr.reveal('.contact__shape', {
+  delay: 600,
+  scale: 0
+});
+
+sr.reveal('.contact__delivery', {
+  delay: 1200
+});
 // Home Shape
 sr.reveal('.home__shape', { origin: 'bottom' });
 
